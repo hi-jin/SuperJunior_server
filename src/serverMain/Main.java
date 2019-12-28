@@ -33,7 +33,7 @@ public class Main {
 			
 			while(true) {
 				client = server.accept();
-				
+				System.out.println(client.getInetAddress()+" 클라이언트 접속"); // connection test
 				ClientListener clientThread = new ClientListener(client);
 //				clientThread.setDaemon(true);		// TODO Daemon으로 만들까말까 만들까말까 던던던던 던져 던져
 				clientThread.start();
