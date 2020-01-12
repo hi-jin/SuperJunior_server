@@ -24,8 +24,8 @@
 hs_err_pid*
 
 # Eclipse
-.project
-.classpath
+.PROJECT
+.CLASSPATH
 .settings/
 /bin/
 module-info.java
