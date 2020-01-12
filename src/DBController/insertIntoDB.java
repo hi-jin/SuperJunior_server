@@ -6,10 +6,10 @@ import java.sql.Statement;
 public class insertIntoDB {
 	
 	// clients 테이블에 사용자 정보를 넣는다.
-	public static boolean addClient(String ID, String Pass) {
+	public static boolean addClient(String ID) {
 		try {
 			Statement 	stmt = connectToDB.DBStmt();
-			String 		sql = "Insert into clients (userid, pwd) values (\"" + ID + "\",\"" + Pass +  "\")";
+			String 		sql = "Insert into clients (userid) values (\"" + ID + "\")";
 			stmt.executeUpdate(sql);
 			return true;
 		}catch(Exception e) {
@@ -18,10 +18,10 @@ public class insertIntoDB {
 	}
 	
 	// todo_list 테이블에 매니저 정보를 넣는다.
-	public static boolean addTodolist(String ID, String mandSchedule, String chalSchedule) {
+	public static boolean addTeam(String ID) {
 		try {
 			Statement 	stmt = connectToDB.DBStmt();
-			String 		sql = "Insert into todo_list (userid, mand_schedule, chal_schedule) values (\"" + ID + "\",\"" + mandSchedule + "\",\"" + chalSchedule +"\")";
+			String 		sql = "Insert into team (teamid) values (\"" + ID +"\")";
 			stmt.executeUpdate(sql);
 			return true;
 		}catch(Exception e) {
