@@ -18,6 +18,7 @@ public class searchFromDB {
 	        
 			return rs;
         } catch(SQLException e) {
+        	System.out.println("일치하는 테이블이 없음.");
         	return null;
         }
 	}

@@ -20,12 +20,12 @@ public class deleteFromDB {
 		}
 	}
 	
-	// todo_list 테이블에서 해당 ID를 삭제한다.
-	public static boolean deleteTodolist(String ID) {
+	// team 테이블에서 해당 ID를 삭제한다.
+	public static boolean deleteTeam(String ID) {
 		try {
 			
 			Statement 	stmt = connectToDB.DBStmt();
-			String sql = "delete from todo_list where userid=\""+ID+"\"";
+			String sql = "delete from team where userid=\""+ID+"\"";
 	        stmt.executeUpdate(sql);
 	        
 			return true;
