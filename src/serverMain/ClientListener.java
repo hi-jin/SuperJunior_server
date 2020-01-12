@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  * client와의 통신을 보조(해석하여 메소드 실행)하는 클래스
@@ -22,7 +24,7 @@ public class ClientListener extends Thread {
 	 * 
 	 * @see #addDelimiters(String...)
 	 */
-	public static final String	DELIMITER = "/#/";
+	public static final String	DELIMITER = "/";
 	private Socket 				client;
 	private PrintWriter 		out = null;
 	private BufferedReader 		in = null;
@@ -72,9 +74,32 @@ public class ClientListener extends Thread {
 		String[] command;
 		try {
 			while((line = in.readLine()) != null) {
+				System.out.println(client + "=>" + line);
 				command = line.split(DELIMITER);
 				switch(command[0]) {
-//				TODO case 추가하기
+				case "login":
+					ResultSet rs = DBController.searchFromDB.searchObjects("clients");
+					try {
+						boolean isLogined = false;
+						while(rs.next()) {
+							if(command[1].equals(rs.getString(1))) {
+								out.println(addDelimiters("login", "1", rs.getString(2)));
+								out.flush();
+								isLogined = true;
+								break;
+							}
+						}
+						if(!isLogined) {
+							if(DBController.insertIntoDB.addClient(command[1])) {
+								out.println(addDelimiters("login", "2"));
+							} else {
+								out.println(addDelimiters("login", "0"));
+							}
+							out.flush();
+						}
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
 				}
 			}
 		} catch (IOException e) {
