@@ -28,6 +28,7 @@ public class ClientListener extends Thread {
 	private Socket 				client;
 	private PrintWriter 		out = null;
 	private BufferedReader 		in = null;
+	private String				userId;
 	
 	public ClientListener(Socket client) {
 		this.client = client;
@@ -64,17 +65,20 @@ public class ClientListener extends Thread {
 			if(in != null) {
 				try {
 					in.close();
+					client.close();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
 			}
+			if(userId == null || userId.equals("")) return;
+			else Main.removeClient(this);
 		}));
 		
 		String line;
 		String[] command;
 		try {
 			while((line = in.readLine()) != null) {
-				System.out.println(client + "=>" + line);
+				System.out.println(this + "=>" + line);
 				command = line.split(DELIMITER);
 				switch(command[0]) {
 				case "login":
@@ -85,6 +89,7 @@ public class ClientListener extends Thread {
 							if(command[1].equals(rs.getString(1))) {
 								out.println(addDelimiters("login", "1", rs.getString(2)));
 								out.flush();
+								userId = command[1];
 								isLogined = true;
 								break;
 							}
@@ -103,7 +108,21 @@ public class ClientListener extends Thread {
 				}
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			if(userId == null || userId.equals("")) return;
+			else Main.removeClient(this);
 		}
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		ClientListener other = (ClientListener) o;
+		if(userId.equals(other.userId)) return true;
+		return false;
+	}
+	
+	@Override
+	public String toString() {
+		if(userId == null || userId.equals("")) return client.toString();
+		else return userId;
 	}
 }
