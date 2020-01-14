@@ -125,4 +125,9 @@ public class ClientListener extends Thread {
 		if(userId == null || userId.equals("")) return client.toString();
 		else return userId;
 	}
+	
+	public void sendUpdate() {
+		System.out.println(client);
+		out.println(addDelimiters("update"));
+	}
 }

@@ -7,7 +7,7 @@ import java.util.Vector;
 
 public class Main {
 
-	private static final int PORT = 50000;
+	private static final int PORT = 40000;
 	
 //	TODO socket을 저장할지, ClientListener 스레드 자체를 저장할지 고민할 필요가 있음 (전자는 접속 시, 후자는 로그인 시 저장)
 	private static Vector<ClientListener> clientList;		// 접속한 클라이언트 저장
@@ -37,6 +37,9 @@ public class Main {
 				ClientListener clientThread = new ClientListener(client);
 //				clientThread.setDaemon(true);		// TODO Daemon으로 만들까말까 만들까말까 던던던던 던져 던져
 				clientThread.start();
+				UpdateListener updateThread = new UpdateListener(clientList);
+				updateThread.setDaemon(true);
+				updateThread.start();
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
