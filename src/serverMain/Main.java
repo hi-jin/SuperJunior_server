@@ -10,7 +10,7 @@ public class Main {
 	private static final int PORT = 40000;
 	
 //	TODO socket을 저장할지, ClientListener 스레드 자체를 저장할지 고민할 필요가 있음 (전자는 접속 시, 후자는 로그인 시 저장)
-	private static Vector<ClientListener> clientList;		// 접속한 클라이언트 저장
+	private static Vector<ClientListener> clientList = new Vector<>();		// 접속한 클라이언트 저장
 	
 	public static void main(String[] args) {
 		try {
@@ -35,8 +35,14 @@ public class Main {
 				client = server.accept();
 				System.out.println(client.getInetAddress()+" 클라이언트 접속"); // connection test
 				ClientListener clientThread = new ClientListener(client);
+				
+				// 클라이언트 리스트에 스레드를 추가함.
+				clientList.add(clientThread);
+				
 //				clientThread.setDaemon(true);		// TODO Daemon으로 만들까말까 만들까말까 던던던던 던져 던져
 				clientThread.start();
+				
+				// 날짜 업데이트 관련 스레드를 시작함
 				UpdateListener updateThread = new UpdateListener(clientList);
 				updateThread.setDaemon(true);
 				updateThread.start();
@@ -53,4 +59,5 @@ public class Main {
 	public synchronized static void removeClient(ClientListener client) {
 		clientList.remove(client);
 	}
+	
 }
