@@ -127,7 +127,7 @@ public class ClientListener extends Thread {
 	}
 	
 	public void sendUpdate() {
-		System.out.println(client);
 		out.println(addDelimiters("update"));
 	}
+	
 }
