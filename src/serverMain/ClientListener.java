@@ -81,33 +81,35 @@ public class ClientListener extends Thread {
 				System.out.println(this + "=>" + line);
 				command = line.split(DELIMITER);
 				switch(command[0]) {
-				case "login":
-					ResultSet rs = DBController.searchFromDB.searchObjects("clients");
-					try {
-						boolean isLogined = false;
-						while(rs.next()) {
-							if(command[1].equals(rs.getString(1))) {
-								out.println(addDelimiters("login", "1", rs.getString(2)));
+					case "login":
+						ResultSet rs = DBController.searchFromDB.searchObjects("clients");
+						try {
+							boolean isLogined = false;
+							while(rs.next()) {
+								if(command[1].equals(rs.getString(1))) {
+									out.println(addDelimiters("login", "1", rs.getString(2)));
+									out.flush();
+									userId = command[1];
+									isLogined = true;
+									break;
+								}
+							}
+							if(!isLogined) {
+								if(DBController.insertIntoDB.addClient(command[1])) {
+									out.println(addDelimiters("login", "2"));
+								} else {
+									out.println(addDelimiters("login", "0"));
+								}
 								out.flush();
-								userId = command[1];
-								isLogined = true;
-								break;
 							}
+						} catch (SQLException e) {
+							e.printStackTrace();
 						}
-						if(!isLogined) {
-							if(DBController.insertIntoDB.addClient(command[1])) {
-								out.println(addDelimiters("login", "2"));
-							} else {
-								out.println(addDelimiters("login", "0"));
-							}
-							out.flush();
-						}
-					} catch (SQLException e) {
-						e.printStackTrace();
-					}
+						break;
 				}
 			}
 		} catch (IOException e) {
+			System.out.println(this.userId+" logout!");
 			if(userId == null || userId.equals("")) return;
 			else Main.removeClient(this);
 		}
