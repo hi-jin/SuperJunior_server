@@ -31,21 +31,22 @@ public class Main {
 				}
 			}));
 			
+			// 날짜 업데이트 관련 스레드를 시작함
+			UpdateListener updateThread = new UpdateListener(clientList);
+			updateThread.setDaemon(true);
+			updateThread.start();
+			System.out.println("update Start!");
+			
 			while(true) {
 				client = server.accept();
 				System.out.println(client.getInetAddress()+" 클라이언트 접속"); // connection test
 				ClientListener clientThread = new ClientListener(client);
 				
-				// 클라이언트 리스트에 스레드를 추가함.
-				clientList.add(clientThread);
-				
 //				clientThread.setDaemon(true);		// TODO Daemon으로 만들까말까 만들까말까 던던던던 던져 던져
 				clientThread.start();
 				
-				// 날짜 업데이트 관련 스레드를 시작함
-				UpdateListener updateThread = new UpdateListener(clientList);
-				updateThread.setDaemon(true);
-				updateThread.start();
+				// 클라이언트 리스트에 스레드를 추가함.
+				clientList.add(clientThread);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -59,5 +60,4 @@ public class Main {
 	public synchronized static void removeClient(ClientListener client) {
 		clientList.remove(client);
 	}
-	
 }
