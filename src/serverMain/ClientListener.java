@@ -9,6 +9,8 @@ import java.net.Socket;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import Group.progressAPI;
+
 /**
  * client와의 통신을 보조(해석하여 메소드 실행)하는 클래스
  * 
@@ -104,6 +106,18 @@ public class ClientListener extends Thread {
 							}
 						} catch (SQLException e) {
 							e.printStackTrace();
+						}
+						break;
+					case "group":
+						if(command[1].equals("create")) {
+							String status = progressAPI.createGroup(command[2]);
+							out.println("group/error/"+status);
+							out.flush();
+						}
+						if(command[1].equals("join")) {
+							String status = progressAPI.joinGroup(command[2], command[3]);
+							out.println("group/error/"+status);
+							out.flush();
 						}
 						break;
 				}
