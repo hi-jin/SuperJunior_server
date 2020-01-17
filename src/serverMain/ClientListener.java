@@ -9,6 +9,7 @@ import java.net.Socket;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import Group.groupAPI;
 import Group.progressAPI;
 
 /**
@@ -110,12 +111,12 @@ public class ClientListener extends Thread {
 						break;
 					case "group":
 						if(command[1].equals("create")) {
-							String status = progressAPI.createGroup(command[2]);
+							String status = groupAPI.createGroup(command[2]);
 							out.println("group/error/"+status);
 							out.flush();
 						}
 						if(command[1].equals("join")) {
-							String status = progressAPI.joinGroup(command[2], command[3]);
+							String status = groupAPI.joinGroup(command[2], command[3]);
 							out.println("group/error/"+status);
 							out.flush();
 						}
