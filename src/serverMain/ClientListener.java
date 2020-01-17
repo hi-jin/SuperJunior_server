@@ -121,6 +121,11 @@ public class ClientListener extends Thread {
 							out.flush();
 						}
 						break;
+					case "progress":
+						String progress = progressAPI.getProgress(command[1]);
+						out.println("progress/"+progress);
+						out.flush();
+						break;
 				}
 			}
 		} catch (IOException e) {
