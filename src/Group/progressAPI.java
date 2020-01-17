@@ -4,11 +4,52 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.StringTokenizer;
 
+import DBController.insertIntoDB;
 import DBController.searchFromDB;
 import DBController.updateDB;
 
 public class progressAPI {
+	public static String createGroup(String groupID) {
+		boolean createStatus = insertIntoDB.addTeam(groupID);
+		if(!createStatus) {
+			return "이미 존재하는 아이디입니다.";
+		} else {
+			return "그룹 생성을 성공적으로 마쳤습니다.";
+		}
+	}
 	
+	public static String joinGroup(String userID, String groupID) {
+		ResultSet client_list = searchFromDB.searchObjects("clients");
+		
+		String[] updateTarget;
+		boolean joinStatus;
+		try {
+			
+			while(client_list.next()) {
+				if(userID.equals(client_list.getString(1))) {
+					
+					String groups = client_list.getString(2);
+					if(!groups.equals("null")) {
+						groups += groupID+"+";
+					}else {
+						groups = groupID+"+";
+					}
+					System.out.println(groups);
+					updateTarget = new String[] { groups, "null" };
+					
+					joinStatus = updateDB.updateClient(userID, updateTarget);
+					
+					if(joinStatus) return "성공적으로 참여하였습니다.";
+					else return "존재하지않는 그룹입니다.";
+				}
+				
+			}
+			
+			throw new SQLException();
+		}catch (SQLException e) {
+			return "일치하는 유저가 없습니다.";
+		}
+	}
 	/**
 	 * DB로부터 진척도를 가져오는 메소드
 	 * 

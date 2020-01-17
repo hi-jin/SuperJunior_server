@@ -13,7 +13,7 @@ public class updateDB {
 		try {
 			
 			Statement 	stmt = connectToDB.DBStmt();
-			String[] 	columns = {  "groups", "progress" };
+			String[] 	columns = {  "teams", "progress" };
 			
 	        for(int i=0; i<updateTarget.length; i++) {
 	        	
