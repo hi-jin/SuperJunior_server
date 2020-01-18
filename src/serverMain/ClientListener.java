@@ -115,7 +115,7 @@ public class ClientListener extends Thread {
 							out.println("group/error/"+status);
 							out.flush();
 						}
-						if(command[1].equals("join")) {
+						else if(command[1].equals("join")) {
 							String status = groupAPI.joinGroup(command[2], command[3]);
 							out.println("group/error/"+status);
 							out.flush();
@@ -127,9 +127,15 @@ public class ClientListener extends Thread {
 							out.println("progress/getGroup/"+status);
 							out.flush();
 						}
-						if(command[1].equals("getUser")) {
+						else if(command[1].equals("getUser")) {
 							String progress = progressAPI.getProgress(command[2]);
 							out.println("progress/"+progress);
+							out.flush();
+						}
+						else if(command[1].equals("updateUser")) { //TODO user이름을 받도록 할까? 받으면 injection공격에 취약할 것 같아서 ClientListener내의 변수를 사용함.
+							boolean result = progressAPI.setProgress(this.userId, Integer.parseInt(command[2]), Integer.parseInt(command[3]));
+							if(result) out.println("progress/updateUser/1");
+							else out.println("progress/updateUser/0");
 							out.flush();
 						}
 						break;
