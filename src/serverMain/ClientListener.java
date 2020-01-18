@@ -122,9 +122,16 @@ public class ClientListener extends Thread {
 						}
 						break;
 					case "progress":
-						String progress = progressAPI.getProgress(command[1]);
-						out.println("progress/"+progress);
-						out.flush();
+						if(command[1].equals("getGroup")) {
+							String status = progressAPI.getGroupProgress(command[2]);
+							out.println("progress/getGroup/"+status);
+							out.flush();
+						}
+						if(command[1].equals("getUser")) {
+							String progress = progressAPI.getProgress(command[2]);
+							out.println("progress/"+progress);
+							out.flush();
+						}
 						break;
 				}
 			}
