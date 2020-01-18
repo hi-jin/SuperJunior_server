@@ -85,4 +85,25 @@ public class progressAPI {
 			return false;
 		}
 	}
+	
+	public static String getGroupProgress(String groupID) {
+		ResultSet client_list = searchFromDB.searchObjects("clients");
+		StringBuilder showProgress = new StringBuilder();
+		try {
+			while(client_list.next()) {
+				if(groupID.equals(client_list.getString(2))) {
+					String userInfo = client_list.getString(1)+"/"
+							+client_list.getString(3)+"//";
+					showProgress.append(userInfo);
+				}
+			}
+			if(showProgress.toString().equals("")) {
+				throw new SQLException();
+			} else {
+				return showProgress.toString();
+			}
+		} catch (SQLException e) {
+			return "해당 그룹에 아무도 존재하지 않습니다.";
+		}
+	}
 }
