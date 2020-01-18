@@ -28,6 +28,7 @@ public class groupAPI {
 			while(client_list.next()) {
 				if(userID.equals(client_list.getString(1))) {
 					if(!findTeam(teamID)) {
+						System.out.println("여기여?");
 						throw new SQLException();
 					}
 					
