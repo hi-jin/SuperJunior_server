@@ -27,15 +27,7 @@ public class progressAPI {
 					
 					String progress = client_list.getString(3);
 					
-					if(progress.equals("null")) return "0%";
-					
-					StringTokenizer st = new StringTokenizer(progress, "/");
-					
-					int finish = Integer.parseInt(st.nextToken()); 	// 끝낸 일정 개수
-					int all = Integer.parseInt(st.nextToken());		// 전체 일정 개수
-					int percent = (int)(((double)finish/all)*100);	// 퍼센트로 나타냄
-					
-					return percent+"%";
+					return getPercentProgress(progress);
 				}
 				
 			}
@@ -86,15 +78,32 @@ public class progressAPI {
 		}
 	}
 	
+	public static String getPercentProgress(String progress) {
+		
+		if(progress.equals("null")) return "0%";
+		
+		StringTokenizer st = new StringTokenizer(progress, "/");
+		
+		int finish = Integer.parseInt(st.nextToken()); 	// 끝낸 일정 개수
+		int all = Integer.parseInt(st.nextToken());		// 전체 일정 개수
+		int percent = (int)(((double)finish/all)*100);	// 퍼센트로 나타냄
+		
+		return percent+"%";
+		
+	}
+	
 	public static String getGroupProgress(String groupID) {
 		ResultSet client_list = searchFromDB.searchObjects("clients");
 		StringBuilder showProgress = new StringBuilder();
 		try {
 			while(client_list.next()) {
-				if(groupID.equals(client_list.getString(2))) {
-					String userInfo = client_list.getString(1)+"/"
-							+client_list.getString(3)+"//";
-					showProgress.append(userInfo);
+				String[] userTeam = client_list.getString(2).split(";");
+				for(String team : userTeam) {
+					if(groupID.equals(team)) {
+						String userInfo = client_list.getString(1)+";"
+								+getPercentProgress(client_list.getString(3))+";;";
+						showProgress.append(userInfo);
+					}
 				}
 			}
 			if(showProgress.toString().equals("")) {
