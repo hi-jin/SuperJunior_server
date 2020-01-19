@@ -31,7 +31,7 @@ public class groupAPI {
 					}
 					
 					String teams = client_list.getString(2);
-					if(!teams.equals("null")) {
+					if(!teams.equals("null;")) {
 						teams += teamID+";";
 					}else {
 						teams = teamID+";";

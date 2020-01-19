@@ -3,7 +3,6 @@ package DBController;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import data.DBInfo;
 
 public class updateDB {
 	/*
@@ -13,7 +12,7 @@ public class updateDB {
 	 */
 	public synchronized static boolean updateClient(String ID, String[] updateTarget) {
 		try {
-			
+			Statement stmt = connectToDB.DBStmt();
 			String[] 	columns = {  "teams", "progress" };
 			
 	        for(int i=0; i<updateTarget.length; i++) {
@@ -33,12 +32,13 @@ public class updateDB {
 		        			+ ID
 		        			+ "\"";
 		        	
-		        	DBController.connectToDB.DBStmt().executeUpdate(sql);
+		        	stmt.executeUpdate(sql);
 		        	
 	        	}
 	        	
 	        }
 	        
+	        stmt.close();
 			return true;
 		}catch(SQLException e) {
 			e.printStackTrace();
@@ -49,7 +49,7 @@ public class updateDB {
 	// 혹시 그룹 아이디를 변경할 일이 있다면 사용.
 	public static boolean updateTeam(String ID, String newTeamID) {
 		try {
-			
+			Statement stmt = connectToDB.DBStmt();
 		    String sql = "update team set "
 		        	+ "teamid"
 		        	+ "=\""
@@ -60,8 +60,8 @@ public class updateDB {
 		        	+ ID
 		        	+ "\"";
 		        	
-		    DBInfo.Dbstmt.executeUpdate(sql);
-		    
+		    stmt.executeUpdate(sql);
+		    stmt.close();
 			return true;
 		}catch(SQLException e) {
 			e.printStackTrace();

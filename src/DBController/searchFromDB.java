@@ -4,8 +4,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import data.DBInfo;
-
 // DB에 있는 정보를 가져오기 위한 클래스이다.
 public class searchFromDB {
 	
@@ -14,9 +12,9 @@ public class searchFromDB {
         ResultSet rs = null;
         String sql; 
         try {
+        	Statement stmt = connectToDB.DBStmt();
 	        sql= "SELECT * from " + tableName;
-	        rs = DBController.connectToDB.DBStmt().executeQuery(sql);
-	        
+	        rs = stmt.executeQuery(sql);
 			return rs;
         } catch(SQLException e) {
         	System.out.println("일치하는 테이블이 없음.");

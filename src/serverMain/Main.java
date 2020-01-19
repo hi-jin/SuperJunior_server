@@ -37,8 +37,6 @@ public class Main {
 			updateThread.start();
 			System.out.println("update Start!");
 			
-			// DBstmt 생성
-			data.DBInfo.Dbstmt = DBController.connectToDB.DBStmt();
 			while(true) {
 				client = server.accept();
 				System.out.println(client.getInetAddress()+" 클라이언트 접속"); // connection test
