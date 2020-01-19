@@ -33,7 +33,7 @@ public class updateDB {
 		        			+ ID
 		        			+ "\"";
 		        	
-		        	DBInfo.Dbstmt.executeUpdate(sql);
+		        	DBController.connectToDB.DBStmt().executeUpdate(sql);
 		        	
 	        	}
 	        	
