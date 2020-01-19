@@ -20,7 +20,6 @@ public class groupAPI {
 	
 	public static String joinGroup(String userID, String teamID) {
 		ResultSet client_list = searchFromDB.searchObjects("clients");
-		
 		String[] updateTarget;
 		boolean joinStatus;
 		try {
@@ -28,7 +27,6 @@ public class groupAPI {
 			while(client_list.next()) {
 				if(userID.equals(client_list.getString(1))) {
 					if(!findTeam(teamID)) {
-						System.out.println("여기여?");
 						throw new SQLException();
 					}
 					
@@ -51,9 +49,11 @@ public class groupAPI {
 			
 			throw new SQLException();
 		}catch (SQLException e) {
+			e.printStackTrace();
 			return "일치하는 그룹이 없습니다.";
 		}
 	}
+	
 	public static String quitGroup(String userID, String teamID) {
 		ResultSet client_list = searchFromDB.searchObjects("clients");
 		String[] updateTarget;

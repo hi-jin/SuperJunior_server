@@ -15,7 +15,7 @@ public class searchFromDB {
         String sql; 
         try {
 	        sql= "SELECT * from " + tableName;
-	        rs = DBInfo.Dbstmt.executeQuery(sql);
+	        rs = DBController.connectToDB.DBStmt().executeQuery(sql);
 	        
 			return rs;
         } catch(SQLException e) {

@@ -11,7 +11,7 @@ public class insertIntoDB {
 	public static boolean addClient(String ID) {
 		try {
 			String 		sql = "Insert into clients (userid) values (\"" + ID + "\")";
-			DBInfo.Dbstmt.executeUpdate(sql);
+			DBController.connectToDB.DBStmt().executeUpdate(sql);
 			return true;
 		}catch(Exception e) {
 			return false;
@@ -22,7 +22,7 @@ public class insertIntoDB {
 	public static boolean addTeam(String ID) {
 		try {
 			String 		sql = "Insert into team (teamid) values (\"" + ID +"\")";
-			DBInfo.Dbstmt.executeUpdate(sql);
+			DBController.connectToDB.DBStmt().executeUpdate(sql);
 			return true;
 		}catch(Exception e) {
 			return false;
