@@ -9,7 +9,7 @@ import DBController.updateDB;
 
 public class groupAPI {
 	
-	public static String createGroup(String groupID) {
+	public static String createGroup(String userID, String groupID) {
 		boolean createStatus = insertIntoDB.addTeam(groupID);
 		if(!createStatus) {
 			return "이미 존재하는 아이디입니다.";
@@ -52,6 +52,27 @@ public class groupAPI {
 			throw new SQLException();
 		}catch (SQLException e) {
 			return "일치하는 그룹이 없습니다.";
+		}
+	}
+	public static String quitGroup(String userID, String teamID) {
+		ResultSet client_list = searchFromDB.searchObjects("clients");
+		String[] updateTarget;
+		
+		try {
+			while(client_list.next()) {
+				if(userID.equals(client_list.getString(1))) {
+					updateTarget = new String[] { teamID+";", "null" };
+					boolean status = updateDB.updateClient(userID, updateTarget);
+					if(status) {
+						return "성공적으로 탈퇴하셨습니다.";
+					}else {
+						return "DB 오류!";
+					}
+				}
+			}
+			throw new SQLException();
+		} catch (SQLException e) {
+			return "넌 존재하지 않는 유저입니다;;;";
 		}
 	}
 	

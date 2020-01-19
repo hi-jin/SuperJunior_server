@@ -3,6 +3,8 @@ package DBController;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import data.DBInfo;
+
 public class updateDB {
 	/*
 	 * updateTarget 배열에 업데이트할 칼럼을 지정해서 userid 와 함께 인자로 넣어준다
@@ -12,7 +14,6 @@ public class updateDB {
 	public synchronized static boolean updateClient(String ID, String[] updateTarget) {
 		try {
 			
-			Statement 	stmt = connectToDB.DBStmt();
 			String[] 	columns = {  "teams", "progress" };
 			
 	        for(int i=0; i<updateTarget.length; i++) {
@@ -32,7 +33,7 @@ public class updateDB {
 		        			+ ID
 		        			+ "\"";
 		        	
-		        	stmt.executeUpdate(sql);
+		        	DBInfo.Dbstmt.executeUpdate(sql);
 		        	
 	        	}
 	        	
@@ -49,7 +50,6 @@ public class updateDB {
 	public static boolean updateTeam(String ID, String newTeamID) {
 		try {
 			
-			Statement 	stmt = connectToDB.DBStmt();     		
 		    String sql = "update team set "
 		        	+ "teamid"
 		        	+ "=\""
@@ -60,7 +60,7 @@ public class updateDB {
 		        	+ ID
 		        	+ "\"";
 		        	
-		    stmt.executeUpdate(sql);
+		    DBInfo.Dbstmt.executeUpdate(sql);
 		    
 			return true;
 		}catch(SQLException e) {
