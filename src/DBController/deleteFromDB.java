@@ -2,6 +2,8 @@ package DBController;
 
 import java.sql.Statement;
 
+import data.DBInfo;
+
 // DB에서 정보를 삭제하기 위한 클래스이다.
 public class deleteFromDB {
 	
@@ -9,9 +11,8 @@ public class deleteFromDB {
 	public static boolean deleteClient(String ID) {
 		try {
 			
-			Statement 	stmt = connectToDB.DBStmt();
 	        String sql = "delete from clients where userid=\""+ID+"\"";
-	        stmt.executeUpdate(sql);
+	        DBInfo.Dbstmt.executeUpdate(sql);
 	        
 			return true;
 		}catch(Exception e) {
@@ -26,7 +27,7 @@ public class deleteFromDB {
 			
 			Statement 	stmt = connectToDB.DBStmt();
 			String sql = "delete from team where userid=\""+ID+"\"";
-	        stmt.executeUpdate(sql);
+			DBInfo.Dbstmt.executeUpdate(sql);
 	        
 			return true;
 		}catch(Exception e) {

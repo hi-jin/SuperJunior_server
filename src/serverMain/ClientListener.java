@@ -111,12 +111,16 @@ public class ClientListener extends Thread {
 						break;
 					case "group":
 						if(command[1].equals("create")) {
-							String status = groupAPI.createGroup(command[2]);
+							String status = groupAPI.createGroup(command[2], command[3]);
 							out.println("group/error/"+status);
 							out.flush();
 						}
 						else if(command[1].equals("join")) {
 							String status = groupAPI.joinGroup(command[2], command[3]);
+							out.println("group/error/"+status);
+							out.flush();
+						} else if(command[1].equals("quit")) {
+							String status = groupAPI.quitGroup(command[2], command[3]);
 							out.println("group/error/"+status);
 							out.flush();
 						}

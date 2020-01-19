@@ -78,7 +78,7 @@ public class progressAPI {
 		}
 	}
 	
-	public static String getPercentProgress(String progress) {
+	public synchronized static String getPercentProgress(String progress) {
 		
 		if(progress.equals("null")) return "0%";
 		
@@ -92,7 +92,7 @@ public class progressAPI {
 		
 	}
 	
-	public static String getGroupProgress(String groupID) {
+	public synchronized static String getGroupProgress(String groupID) {
 		ResultSet client_list = searchFromDB.searchObjects("clients");
 		StringBuilder showProgress = new StringBuilder();
 		try {
