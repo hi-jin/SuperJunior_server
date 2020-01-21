@@ -24,7 +24,7 @@ public class deleteFromDB {
 	public static boolean deleteTeam(String ID) {
 		try {
 			Statement stmt = connectToDB.DBStmt();
-			String sql = "delete from team where userid=\""+ID+"\"";
+			String sql = "delete from team where teamid=\""+ID+"\"";
 			stmt.executeUpdate(sql);
 	        stmt.close();
 			return true;
