@@ -60,4 +60,8 @@ public class Main {
 	public synchronized static void removeClient(ClientListener client) {
 		clientList.remove(client);
 	}
+	
+	public synchronized static Vector<ClientListener> getClientList() {
+		return clientList;
+	}
 }

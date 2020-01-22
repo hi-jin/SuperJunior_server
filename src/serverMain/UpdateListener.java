@@ -24,6 +24,7 @@ public class UpdateListener extends Thread{
 				// 날짜가 달라지면 업데이트 메시지를 보내도록 함.
 				for(ClientListener cl : clientList) {
 					cl.sendUpdate();
+					cl.sendGroupUpdate();
 				}
 			}
 			

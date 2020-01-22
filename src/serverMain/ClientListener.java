@@ -119,10 +119,17 @@ public class ClientListener extends Thread {
 							String status = groupAPI.joinGroup(command[2], command[3]);
 							out.println("group/error/"+status);
 							out.flush();
+							
+							for(ClientListener cl : Main.getClientList()) {
+								cl.sendGroupUpdate();
+							}
 						} else if(command[1].equals("quit")) {
 							String status = groupAPI.quitGroup(command[2], command[3]);
 							out.println("group/error/"+status);
 							out.flush();
+							for(ClientListener cl : Main.getClientList()) {
+								cl.sendGroupUpdate();
+							}
 						}
 						break;
 					case "progress":
@@ -167,6 +174,11 @@ public class ClientListener extends Thread {
 	
 	public void sendUpdate() {
 		out.println(addDelimiters("update"));
+		out.flush();
+	}
+	
+	public void sendGroupUpdate() {
+		out.println(addDelimiters("group", "update"));
 		out.flush();
 	}
 	
